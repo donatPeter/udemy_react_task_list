@@ -15,28 +15,37 @@ class App extends Component {
     this.setState({ input: event.target.value })
   }
 
+  deleteCharHandler = (index) => {
+    const modifiedOutput = [...this.state.input.split('')];
+    modifiedOutput.splice(index, 1);
+    this.setState({input: modifiedOutput.join('')});
+  }
+
   render() {
 
     const input = (
       <input
         onChange={this.inputChangeHandler}
+        value={this.state.input}
       ></input>
     );
 
     const charArr = this.state.input.split('');
     const chars = (
       <div>
-        {charArr.map(char => {
-          return <CharComponent char={char} />
+        {charArr.map((char, index) => {
+          return <CharComponent
+            char={char}
+            click={() => this.deleteCharHandler(index)} />
         })}
       </div>
     );
-    
+
     return (
       <div className="App">
         {input}
         <p>{this.state.inputLength}</p>
-        <ValidationComponent 
+        <ValidationComponent
           length={this.state.inputLength}
         />
         {chars}
