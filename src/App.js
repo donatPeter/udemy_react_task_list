@@ -6,19 +6,17 @@ import CharComponent from './CharComponent/CharComponent'
 class App extends Component {
 
   state = {
-    input: '',
-    inputLength: 0
+    input: ''
   }
 
   inputChangeHandler = (event) => {
-    this.setState({ inputLength: event.target.value.length })
     this.setState({ input: event.target.value })
   }
 
   deleteCharHandler = (index) => {
     const modifiedOutput = [...this.state.input.split('')];
     modifiedOutput.splice(index, 1);
-    this.setState({input: modifiedOutput.join('')});
+    this.setState({ input: modifiedOutput.join('') });
   }
 
   render() {
@@ -36,6 +34,7 @@ class App extends Component {
         {charArr.map((char, index) => {
           return <CharComponent
             char={char}
+            key={index}
             click={() => this.deleteCharHandler(index)} />
         })}
       </div>
@@ -44,9 +43,9 @@ class App extends Component {
     return (
       <div className="App">
         {input}
-        <p>{this.state.inputLength}</p>
+        <p>{this.state.input}</p>
         <ValidationComponent
-          length={this.state.inputLength}
+          input={this.state.input}
         />
         {chars}
         <ol>
